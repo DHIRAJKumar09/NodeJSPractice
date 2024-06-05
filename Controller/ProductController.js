@@ -3,7 +3,7 @@ const productmodel = require('../Model/productmodel');
 
 exports.createproduct=async(req,res)=>{
     const product = await productmodel.create(req.body);
-
+    
     res.status(201).json({
         success:true,
         product, 
@@ -74,4 +74,14 @@ exports.getproductdetail=async(req,res)=>{
             message:"Internal Server Error",
         })
     }
+}
+exports.searchResult=async(req,res)=>{
+    let result  = await productmodel.find({
+        "$or":[
+            {name: { $regex:req.params.key } },
+            {description :{$regex:req.params.key}},
+            {category : {$regex :req.params.key}}
+        ]
+    });
+    res.send(result);
 }
