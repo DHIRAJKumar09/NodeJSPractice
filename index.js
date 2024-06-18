@@ -19,7 +19,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/Curd')
 .catch((error)=>{
     console.log(error);
 })
-
+app.use('/uploads', express.static('uploads'));
 app.use("/curd/v1/",router);
 app.use("/curd/v1",productrouter);
 

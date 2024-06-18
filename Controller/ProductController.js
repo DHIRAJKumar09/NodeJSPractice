@@ -1,16 +1,25 @@
 const productmodel = require('../Model/productmodel');
 
 
-exports.createproduct=async(req,res)=>{
-    const product = await productmodel.create(req.body);
+// exports.createproduct=async(req,res)=>{
+//     const product = await productmodel.create(req.body);
     
-    res.status(201).json({
+//     res.status(201).json({
+//         success:true,
+//         product, 
+//     })
+
+
+
+// }
+
+exports.createproduct = async(req,res)=>{
+    const product  = await productmodel.create(req.body);
+     res.status(200).json({
         success:true,
-        product, 
-    })
+        product
 
-
-
+     })
 }
 exports.getallproduct = async(req,res)=>{
    
@@ -22,6 +31,13 @@ exports.getallproduct = async(req,res)=>{
     })
 }
 
+// exports.getallproduct =async(req,res)=>{
+//     const products = await productmodel.find();
+//     res.status(200).json({
+//         success:true,
+//         products,
+//     })
+// }
 
 exports.updateProduct = async(req,res,next)=>{
     let product = productmodel.findById(req.params.id);
@@ -32,7 +48,9 @@ exports.updateProduct = async(req,res,next)=>{
             message:"Product is not found"
         });
     }
-    product = await productmodel.findByIdAndUpdate(req.params.id,req.body);
+     product = await productmodel.findByIdAndUpdate(req.params.id,
+        {$set:req.body}
+    );
     res.status(200).json({
         success:true,
         product

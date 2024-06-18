@@ -16,7 +16,17 @@ const UserSchema = new mongoose.Schema({
     password:{
         type:String,
        
+    },
+    userType:{
+        type:String,
+        enum:['admin','user','premium','guest'],default:'user'
+    },
+    avatar:{
+        type:String,
+       
     }
+
+
 });
 
 
@@ -24,12 +34,5 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('users',UserSchema);
 
-const validate = (data)=>{
-    const schema =joi.object({
-        name:joi.string().required().label("name"),
-        email:joi.string().label("email").required(),
-        password:joi.string().label("password").required(),
-    })
-    return schema.validate(data);
-}
-module.exports = {User,validate};
+
+module.exports = {User};
